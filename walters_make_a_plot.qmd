@@ -1,0 +1,74 @@
+---
+title: "Make a Plot Assignment"
+author: "Grace Walters"
+format: pdf
+editor: visual
+whitespace: small
+---
+
+# Make a Plot!
+
+installing ggplot (& other packages I needed to render the PDF)...
+
+```{r}
+install.packages("rmarkdown")
+```
+
+```{r}
+install.packages("ggplot2")
+install.packages("knitr")
+```
+
+opening the package...
+
+```{r}
+library(ggplot2)
+```
+
+For my plot, I wanted to visualize how the etymological makeup of words asked in the Scripps National Spelling Bee semifinals & finals has changed from 2013 to 2024 (for instance, what proportion of the words asked in the bee come from Latin and Greek parts? What about French loans?). I work as a spelling bee coach, so trends in this data help me know what's most important to focus on with my students as we prepare for this year's bee :)
+
+my CSV file with my data from my personal computer (I had to do this assignment in my local R because I could not figure out how to get my data to open in a codespace)...
+
+```{r}
+etym_props <- read.csv("C:\\Users\\me\\Documents\\National_Spelling_Bee_Etymology_Proportions.csv")
+
+etym_props
+```
+
+making the plot...
+
+```{r}
+etym_props |>
+  ggplot(
+  aes(
+    x = Year,
+    y = Proportion
+  )
+) +
+ geom_line(
+    aes(
+      color = Language
+    )
+  ) +
+  geom_point(
+    aes(
+      color = Language
+    )
+  )+
+  scale_x_binned()+
+  labs(
+    x = "Competition Year",
+    y = "% of Total Semis & Finals Words",
+    title = "Scripps National Spelling Bee Etymological Makeup Through the Years",
+    subtitle = "How the competition has changed over time"
+  )+
+  theme(
+    aspect.ratio = 0.5
+  )
+```
+
+Looks good for the most part! Some kinks I couldn't iron out:
+
+-   why won't my x axis display my first and last values in "year"?
+
+-   why are my data points plotting between years rather than on them?
